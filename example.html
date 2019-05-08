@@ -1,0 +1,62 @@
+<html>
+
+<head> 
+	<title> Example mustache </title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://mustache.github.io/extras/mustache.js"></script>	
+	<script src="https://mustache.github.io/extras/highlight.js"></script>
+</head>
+
+<body>
+
+	<input type="button" value="Test" onclick="juntarHtmlEJson()" />
+					
+	<textarea style="font-size: 18px" class="template" cols="50" rows="20">
+	<h1>{{header}}</h1>
+	{{#bug}}
+	{{/bug}}
+
+	{{#items}}
+	  {{#first}}
+		<li><strong>{{name}}</strong></li>
+	  {{/first}}
+	  {{#link}}
+		<li><a href="{{url}}">{{name}}</a></li>
+	  {{/link}}
+	{{/items}}
+
+	{{#empty}}
+	  <p>The list is empty.</p>
+	{{/empty}}
+	</textarea>
+
+	<textarea style="font-size: 18px" class="json" cols="50" rows="20" >{
+	  "header": "Colors",
+	  "items": [
+		  {"name": "red", "first": true, "url": "#Red"},
+		  {"name": "green", "link": true, "url": "#Green"},
+		  {"name": "blue", "link": true, "url": "#Blue"}
+	  ],
+	  "empty": false
+	 }</textarea>
+	
+	 <div class="html"> Eu sou a div que receberá o resultado do mustache! OI tchurma! </div>
+	
+	 <script> 
+		function juntarHtmlEJson() {
+			var html = "lalala";
+			
+			try {
+			  template = $('.template').val();
+			  json = $.parseJSON($('.json').val());
+			  html = Mustache.to_html(template, json).replace(/^\s*/mg, '');
+			} catch (_error) {
+			  e = _error;
+			  html = e.toString();
+			}
+			$('.html').html(html);
+		}
+	 </script>
+
+  </body>
+</html>
